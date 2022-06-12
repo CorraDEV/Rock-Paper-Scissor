@@ -1,7 +1,6 @@
 function computerPlay(){
     let computer_choice = Array('rock','paper','scissor');
     computer_choice = computer_choice[Math.floor(Math.random()*computer_choice.length)];
-    document.getElementById("computer-choice").innerHTML = 'computer choice: '+computer_choice;
     return computer_choice;
 }
 
@@ -14,7 +13,7 @@ function playerPlay() {
 
         if(player_choice == 'rock' || player_choice == 'paper' || player_choice == 'scissor')
         {
-            document.getElementById("player-choice").innerHTML = 'player choice: '+player_choice;;                
+            return player_choice;
         }
         else
         {
@@ -26,8 +25,7 @@ function playerPlay() {
     {
         console.log('choice not valid');
     }
-
-    return player_choice;
+    
 }
 
 function playRound(playerSelection, computerSelection) {
@@ -36,7 +34,7 @@ function playRound(playerSelection, computerSelection) {
 
     if((playerSelection == 'rock' && computerSelection == 'scissor') || (playerSelection == 'paper' && computerSelection == 'rock') || (playerSelection == 'scissor' && computerSelection == 'paper'))
     {
-        match_result = 'you won';
+        match_result = 'player won';
     }
     else if(playerSelection === computerSelection)
     {
@@ -44,13 +42,50 @@ function playRound(playerSelection, computerSelection) {
     }
     else
     {
-        match_result = 'you lost';
+        match_result = 'player lost';
     }
     
-    document.getElementById("match-result").innerHTML = match_result;                
     return match_result;
 }  
 
-let player_choice = playerPlay();
-let computer_choice = computerPlay();
-let match_result = playRound(player_choice, computer_choice);
+function game()
+{
+    let playerWins = 0;
+    let computerWins = 0;
+    let game_result;
+
+    for(let i=0; i<5; i++)
+    {
+        let playerSelection = playerPlay();
+        let computerSelection = computerPlay();
+        let round_result = playRound(playerSelection, computerSelection);
+        if(round_result === 'player won')
+        {
+            playerWins++;
+        }
+        else if(round_result === 'player lost')
+        {
+            computerWins++;
+        }
+                       
+        document.getElementById("player-choice").innerHTML += 'player choice: '+playerSelection+'<br>';
+        document.getElementById("computer-choice").innerHTML += 'computer choice: '+computerSelection+'<br>';
+        document.getElementById("match-result").innerHTML += round_result+'<br>';
+    }
+
+    if(playerWins > computerWins)
+    {
+        game_result = 'you won';
+        
+        
+    }
+    else if(playerWins < computerWins) 
+    {
+        game_result = 'you lost';
+    }
+    else
+    {
+        game_result = 'you draw';
+    }
+    document.getElementById("game-result").innerHTML = game_result;                
+}
