@@ -1,0 +1,67 @@
+html{
+    font-family: Arial, Helvetica, sans-serif; 
+}
+
+body{
+    background-color: lightskyblue;
+}
+
+h1{
+    text-align: center;
+    font-size: 45px;
+}
+
+#start-game{    
+    width: 600px;
+    height: 200px;
+    font-size: 70px;        
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;    
+    margin-top: -100px;
+    margin-left: -300px;    
+}
+
+#rock, #paper{
+    height: auto;
+    width: 250px;
+}
+
+#paperImg{
+    height: auto;
+    width: 200px;
+    margin-left: 20px;
+    margin-top: 30px;
+}
+
+#rockImg{
+    height: auto;
+    width: 200px;
+    margin-left: 30px;
+    margin-top: 30px;
+}
+
+#scissorImg{
+    height: auto;
+    width: 250px;
+    text-align: center;
+}
+
+#choicesContainer{
+    display: flex;        
+    position: absolute;
+    top: 50%;
+    left: 50%;    
+    margin-left: -425px;
+    margin-top: -127px;   
+    gap: 100px;     
+}
+
+#rock:hover,
+#paper:hover,
+#scissor:hover{
+    cursor: pointer;
+    background-color: lightslategray;
+
+}
