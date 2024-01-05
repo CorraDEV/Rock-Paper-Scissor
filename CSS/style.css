@@ -11,16 +11,17 @@ h1{
     font-size: 45px;
 }
 
+h2{
+    text-align: center;
+}
+
 #start-game{    
+    display: block;
     width: 600px;
     height: 200px;
     font-size: 70px;        
-    margin: 0 auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;    
-    margin-top: -100px;
-    margin-left: -300px;    
+    margin: 0 auto;                    
+    margin-top: 100px;
 }
 
 #rock, #paper{
@@ -50,11 +51,8 @@ h1{
 
 #choicesContainer{
     display: flex;        
-    position: absolute;
-    top: 50%;
-    left: 50%;    
-    margin-left: -425px;
-    margin-top: -127px;   
+    justify-content: center;    
+    margin-top: 150px;
     gap: 100px;     
 }
 
@@ -63,5 +61,18 @@ h1{
 #scissor:hover{
     cursor: pointer;
     background-color: lightslategray;
+}
 
+#scoreBothDiv{
+    display: flex;        
+    justify-content: center;            
+    gap: 100px;     
+    margin-top: 150px;
+    font-size: 40px;
+}
+
+#matchResDiv{
+    font-size: 40px;
+    width: fit-content;        
+    margin: 150px auto auto;
 }

@@ -38,7 +38,15 @@ function playRound(playerSelection, computerSelection) {
 }  
 
 function setGame()
-{            
+{   
+    const body = document.body;
+    const matchResDiv = document.getElementById('matchResDiv'); 
+    let choicesContainer;
+
+    if(matchResDiv){
+        body.removeChild(matchResDiv);
+    }         
+    
     if(
         !document.getElementById('rock') ||
         !document.getElementById('paper') ||
@@ -69,30 +77,49 @@ function setGame()
         scissorDiv.id = 'scissor';
         scissorDiv.classList.add('choice');
         
-        const choicesContainer = document.createElement('div');
+        choicesContainer = document.createElement('div');
         choicesContainer.id = 'choicesContainer';
         choicesContainer.appendChild(rockDiv);
         choicesContainer.appendChild(paperDiv);
-        choicesContainer.appendChild(scissorDiv);
-
-        const body = document.querySelector('body');
-        body.appendChild(choicesContainer);        
+        choicesContainer.appendChild(scissorDiv);                        
     }        
+
+    if(!document.getElementById('scoreBothDiv')){
+        const scoreBothDiv = document.createElement('div');
+        scoreBothDiv.id = 'scoreBothDiv';        
+        
+        const playerScoreDiv = document.createElement('div');
+        playerScoreDiv.id = 'playerScoreDiv';
+        playerScoreDiv.textContent = 'Player: 0';
+        
+        const computerScoreDiv = document.createElement('div');
+        computerScoreDiv.id = 'computerScoreDiv';
+        computerScoreDiv.textContent = 'Computer: 0';
+        scoreBothDiv.appendChild(playerScoreDiv);
+        scoreBothDiv.appendChild(computerScoreDiv);
+        
+        body.appendChild(choicesContainer);                
+        body.appendChild(scoreBothDiv);
+    }
+    else{        
+        playerScoreDiv.textContent = 'Player: 0';
+        computerScoreDiv.textContent = 'Computer: 0';
+        body.insertBefore(choicesContainer, scoreBothDiv);
+    }    
 }
 
 function deleteGame()
 {            
     const body = document.querySelector('body');
     const choicesContainer = document.querySelector('#choicesContainer');                
-    body.removeChild(choicesContainer);            
+    const scoreBothDiv = document.querySelector('#scoreBothDiv');
+    body.removeChild(choicesContainer);                                     
 }
 
-let match_result;
 let playerPoints = 0;
 let computerPoints = 0;
-let matchResDiv;
 
-document.addEventListener("click", (e) =>{                    
+document.addEventListener("click", (e) =>{                            
     if(e.target.id == "start-game"){
         e.target.style.display = "none";
         setGame();
@@ -107,42 +134,40 @@ document.addEventListener("click", (e) =>{
     )
     {            
         let playerChoice = playerPlay(e.target.id);
-        let computerChoice = computerPlay();                
-        
-        match_result = playRound(playerChoice, computerChoice);        
-        
-        if(!document.getElementById("match_result")){
-            matchResDiv = document.createElement('div');
-            matchResDiv.id = 'match_result';                    
-        }
-                
-        if(match_result === 'player won'){
-            playerPoints++;        
-            matchResDiv.style.color = 'green';
-        }            
-        else if(match_result === 'player lost'){
-            computerPoints++;                
-            matchResDiv.style.color = 'red';
-        }
-        else{
-            matchResDiv.style.color = 'black';
-        }                    
+        let computerChoice = computerPlay();                        
+        let roundRes = playRound(playerChoice, computerChoice);                        
 
-        matchResDiv.textContent = match_result;
+        if(roundRes === 'player won')
+            playerPoints++;
+        else if(roundRes === 'player lost') 
+            computerPoints++;        
+
+        console.log(playerPoints, computerPoints);
+
+        const computerScoreDiv = document.querySelector('#computerScoreDiv');
+        const playerScoreDiv = document.querySelector('#playerScoreDiv');
+        computerScoreDiv.textContent = 'Computer: ' + computerPoints;
+        playerScoreDiv.textContent = 'Player: ' + playerPoints;
 
         if(computerPoints == 5 || playerPoints == 5){
+            const matchResDiv = document.createElement("div");             
+            matchResDiv.id = "matchResDiv";
             deleteGame();
-            if(computerPoints == 5){                
+            if(computerPoints === 5){                
                 matchResDiv.style.color = 'red';
-                matchResDiv.textContent = "player lost the game";
+                matchResDiv.textContent = "player has lost".toUpperCase();
             }
             else{                
                 matchResDiv.style.color = 'green';
-                matchResDiv.textContent = "player won the game";
+                matchResDiv.textContent = "player has won".toUpperCase();
             }
-        }
-
-        const body = document.querySelector('body');        
-        body.appendChild(matchResDiv);    
+            const body = document.querySelector('body');                    
+            body.appendChild(matchResDiv);    
+            const restartBtn = document.querySelector('#start-game');
+            restartBtn.textContent = "restart game".toUpperCase();
+            restartBtn.style.display = "block";
+            playerPoints = 0;
+            computerPoints = 0;            
+        }        
     }
 });
