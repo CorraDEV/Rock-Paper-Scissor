@@ -110,7 +110,7 @@ function setGame()
 
 function deleteGame()
 {            
-    const body = document.querySelector('body');
+    const body = document.body;
     const choicesContainer = document.querySelector('#choicesContainer');                
     const scoreBothDiv = document.querySelector('#scoreBothDiv');
     body.removeChild(choicesContainer);                                     
@@ -161,7 +161,7 @@ document.addEventListener("click", (e) =>{
                 matchResDiv.style.color = 'green';
                 matchResDiv.textContent = "player has won".toUpperCase();
             }
-            const body = document.querySelector('body');                    
+            const body = document.body;                    
             body.appendChild(matchResDiv);    
             const restartBtn = document.querySelector('#start-game');
             restartBtn.textContent = "restart game".toUpperCase();
